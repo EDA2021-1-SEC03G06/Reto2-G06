@@ -36,23 +36,107 @@ operación solicitada
 
 def printMenu():
     print("Bienvenido")
+    print("0- Seleccionar tipo de datos")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2-  Encontrar videos con menos vistas")
+    print("3-  Encontrar buenos videos por categoria y pais")
+    print("4- Encontrar video tendencia por pais")
+    print("5- Encontrar video tendencia por categoría")
+    print("6- Buscar videos con mas likes ")
+    print("7- Seleccionar tamaño de la muestra para trabajar")
 
 catalog = None
-
+reducido= None
 """
 Menu principal
 """
+def mostrarOrdenamientos():
+    print("Seleccione el tipo de ordenamiento iterativo:")
+    print("1- selection Sort")
+    print("2- Insertion Sort")
+    print("3- Shell Sort")
+    print("4- quick sort")
+    print("5- merge sort")
+
+
+
+
+tipoDato=""
+sys.setrecursionlimit(1000*10)
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+    
+    inputs = int(input('Seleccione una opción para continuar '))
+    if inputs==0:
 
-    elif int(inputs[0]) == 2:
-        pass
+        x=int(input("Presione 1 para seleccionar arreglos, o 2 para seleccionar listas encadenadas "))
+        if x==1:
+            tipoDato="ARRAY_LIST"
+            print("Array lists")
+        elif x==2:
+            tipoDato="SINGLE_LINKED"
+            print("Single linked")
+    elif inputs == 1:
+        print("Cargando información de los archivos .... ")
+        catalog=controller.initCatalog(tipoDato)
+        print(tipoDato)
+        controller.loadData(catalog)
+       
 
-    else:
-        sys.exit(0)
-sys.exit(0)
+    elif inputs == 2:
+        numero=int(input(("Indique tamaño de la muestra ")))
+        tag=input("Indique el tag ")
+        lista=controller.videosLikesCategory(catalog,tag)
+        for i in range(0,numero):
+            video=lt.getElement(lista,i)
+            print(video["title"]," ",video["category_id"]," ",video["likes"])
+    elif inputs==3:
+        tamano=int(input("Ingrese la cantidad de videos en el ranking "))
+        pais=input("Ingrese el nombre del pais ")
+        categoria=input("Ingrese la categoria que desea buscar ")
+        mostrarOrdenamientos()
+        numero=int(input())
+        print("cargando...")
+
+        lista=controller.PaisesCategoria(pais,categoria,tamano,numero,catalog)
+
+        for i in range(1,tamano+1):
+            x=lt.getElement(lista[0],i)
+            print(i ," : ", x["title"]," ",x["trending_date"]," ",x["channel_title"]," ",x["publish_time"]," ",x["views"]," ",x["likes"]," ",x["dislikes"],x["country"] )
+        print("el algoritmo se demora: ",lista[1]," ms") 
+    elif inputs==4:
+        pais=input("Ingrese el nombre del pais  ")
+        print("cargando...")
+        
+        video_dias=controller.PaisTendencia(pais,catalog)
+        video=video_dias[0]
+        print(video["title"] ," ", video["channel_title"]," ", video["country"]," ",video_dias[1])
+        print("El algoritmo se demora :" , video_dias[2] ," ms")
+    elif inputs==5:
+        nombre=input("Ingrese la categoria del video  ")
+        print ("Cargando...")   
+        
+        video_cates=controller.CategoriaTendencia(nombre,catalog)
+        video=video_cates[0] 
+        print(video["title"]," ",video["channel_title"], " ",  video["category_id"]," ",video_cates[1])
+        print("el algoritmo se demora :", video_cates[2],"ms")
+    elif inputs==6:
+        pais=input("Ingrese el nombre del pais ")
+        
+        numero=int(input("Ingrese la cantidad de videos "))
+        tag=input("Ingrese el tag ")
+        print("cargando")
+        videos=controller.PaisTagLikes(pais,tag,catalog)
+        size=lt.size(videos[0])
+        if numero>size:
+            numero=size
+        for i in range(1,numero+1):
+            video=lt.getElement(videos[0],i)
+            print(i, " ",video["title"]," ",video["channel_title"]," ",video["publish_time"]," ",video["likes"]," ",video["country"])
+        print("Tiempo de ejecución: ", videos[1])
+
+
+    elif inputs==7:
+        size=int(input("Indique el tamaño de la muestra"))
+        if size<lt.size(catalog["videos"]):
+            reducido=controller.reduceList(catalog,size)  
