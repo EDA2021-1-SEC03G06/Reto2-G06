@@ -80,14 +80,16 @@ while True:
         print("Cargando información de los archivos .... ")
         catalog=controller.initCatalog(tipoDato)
         print(tipoDato)
-        controller.loadData(catalog)
+        deltas=controller.loadData(catalog)
+        print("Los datos se han demorado en cargar " ,deltas[0]," Ms")
+        print("Al cargar los datos se han ocupado ",deltas[1]," Kb")
        
 
     elif inputs == 2:
         numero=int(input(("Indique tamaño de la muestra ")))
         tag=input("Indique el tag ")
         lista=controller.videosLikesCategory(catalog,tag)
-        for i in range(0,numero):
+        for i in range(1,numero):
             video=lt.getElement(lista,i)
             print(video["title"]," ",video["category_id"]," ",video["likes"])
     elif inputs==3:
