@@ -52,7 +52,7 @@ def newCatalog(tipo):
     catalog["videos"] = lt.newList(tipo)
     
     catalog["category"]=lt.newList(tipo)
-    catalog["category-videos"]=mp.newMap(100,maptype='PROBING',loadfactor=0.5)
+    catalog["category-videos"]=mp.newMap(200,maptype='CHAINING',loadfactor=6.0)
 
     return catalog
 

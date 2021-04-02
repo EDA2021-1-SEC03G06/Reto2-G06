@@ -84,7 +84,7 @@ def deltaMemory(start_memory, stop_memory):
 
 def loadVideos(catalog):
     
-    file_name=cf.data_dir + "videos-small.csv"
+    file_name=cf.data_dir + "videos-large.csv"
     input_file=csv.DictReader(open(file_name,encoding="utf-8"))
     for video in input_file:
         model.addVideo(catalog,video)
