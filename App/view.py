@@ -110,7 +110,7 @@ while True:
         pais=input("Ingrese el nombre del pais  ")
         print("cargando...")
         
-        video_dias=controller.PaisTendencia(pais,catalog)
+        video_dias=controller.trendVideosCountry(catalog,pais)
         video=video_dias[0]
         print(video["title"] ," ", video["channel_title"]," ", video["country"]," ",video_dias[1])
         print("El algoritmo se demora :" , video_dias[2] ," ms")

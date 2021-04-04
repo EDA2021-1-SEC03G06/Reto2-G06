@@ -86,20 +86,29 @@ def loadVideos(catalog):
     
     file_name=cf.data_dir + "videos-large.csv"
     input_file=csv.DictReader(open(file_name,encoding="utf-8"))
+    i=0
     for video in input_file:
+        i+=1
         model.addVideo(catalog,video)
         model.addCategory_videos(catalog,video)
+        model.addCountry(catalog,video)
+    print("Cantidad de videos cargados: ", i)
 
     
 
 def loadCategories(catalog):
     file_name=cf.data_dir + "category-id.csv"
     input_file=csv.DictReader(open(file_name,encoding="utf-8"),delimiter="\t")
+    i=0
     for categoria in input_file:
         model.addCategory(catalog, categoria)
-
+        i+=1
+    print("Cantidad de categorias cargadas: ",i)
 # Funciones de ordenamiento
 
 def videosLikesCategory(catalog, category):
     return model.videosLikesCategory(catalog,category)
+
+def trendVideosCountry(catalog,country):
+    return model.trendVideosCountry(catalog,country)
 

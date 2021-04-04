@@ -52,7 +52,8 @@ def newCatalog(tipo):
     catalog["videos"] = lt.newList(tipo)
     
     catalog["category"]=lt.newList(tipo)
-    catalog["category-videos"]=mp.newMap(200,maptype='CHAINING',loadfactor=6.0)
+    catalog["category-videos"]=mp.newMap(200,maptype='CHAINING',loadfactor=1.0)
+    catalog["countries"]=mp.newMap(200,maptype='CHAINING',loadfactor=1.0)
 
     return catalog
 
@@ -76,10 +77,21 @@ def addCategory_videos(catalog,video):
         lista=me.getValue(couple)
     else:
         lista=lt.newList(datastructure='ARRAY_LIST')
-        mp.put(categories,category,lista)
+        mp.put(catalog["category-videos"],category,lista)
         
     lt.addLast(lista,video)
+def addCountry(catalog,video):
+    countries=catalog["countries"]
+    country=video["country"]
 
+    flag=mp.contains(countries,country)
+    if flag:
+        couple=mp.get(countries,country)
+        lista=me.getValue(couple)
+    else:
+        lista=lt.newList(datastructure='ARRAY_LIST')
+        mp.put(catalog["countries"],country,lista)
+    lt.addLast(lista,video)
 # Funciones para creacion de datos
 
 def newCategory(id,name):
@@ -220,6 +232,8 @@ def quickSort(lista,numero):
     return lista,elapsed_time_mseg
 
 def videosLikesCategory(catalog,category):
+    
+    start_time = time.process_time()
 
     number=getCategoryNumber(category,catalog)
     videos=catalog["category-videos"]
@@ -230,3 +244,34 @@ def videosLikesCategory(catalog,category):
     
     return ordenada
 
+def trendVideosCountry(catalog,country):
+    start_time = time.process_time()
+    countries=catalog["countries"]
+    couple=mp.get(countries,country)
+    lista=me.getValue(couple)
+
+    lista_ordenada=mergeSort(lista,3)[0]
+
+    mayor=lt.getElement(lista_ordenada,1)
+    cantidad_mayor=0
+    size=lt.size(lista_ordenada)
+    print(size)
+    
+    for i in range(1,size+1):                    #se compara cual es el video que mas dias ha durado en tendencia
+        comparador=lt.getElement(lista_ordenada,i)
+        bandera=True
+        numeral=i
+        cantidad=0
+        while bandera and numeral<=size:
+            comparado=lt.getElement(lista_ordenada,numeral)
+            if comparador["video_id"]==comparado["video_id"]:
+                cantidad+=1
+            else:
+                bandera=False
+            if cantidad>cantidad_mayor:
+                cantidad_mayor=cantidad
+                mayor=lt.getElement(lista_ordenada,numeral)
+            numeral+=1
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return mayor,cantidad_mayor,elapsed_time_mseg
