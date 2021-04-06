@@ -39,10 +39,10 @@ def printMenu():
     print("0- Seleccionar tipo de datos")
     print("1- Cargar información en el catálogo")
     print("2-  Encontrar videos con menos vistas")
-    print("3-  Encontrar buenos videos por categoria y pais")
-    print("4- Encontrar video tendencia por pais")
-    print("5- Encontrar video tendencia por categoría")
-    print("6- Buscar videos con mas likes ")
+    print("3-  requerimiento1")
+    print("4- requerimiento2")
+    print("5- requerimiento3")
+    print("6- requerimiento4 ")
     print("7- Seleccionar tamaño de la muestra para trabajar")
 
 catalog = None
@@ -96,21 +96,19 @@ while True:
         tamano=int(input("Ingrese la cantidad de videos en el ranking "))
         pais=input("Ingrese el nombre del pais ")
         categoria=input("Ingrese la categoria que desea buscar ")
-        mostrarOrdenamientos()
-        numero=int(input())
         print("cargando...")
 
-        lista=controller.PaisesCategoria(pais,categoria,tamano,numero,catalog)
-
+        lista=controller.requerimiento1(catalog,pais,categoria)
+        
         for i in range(1,tamano+1):
             x=lt.getElement(lista[0],i)
-            print(i ," : ", x["title"]," ",x["trending_date"]," ",x["channel_title"]," ",x["publish_time"]," ",x["views"]," ",x["likes"]," ",x["dislikes"],x["country"] )
+            print(i ," : ","Titulo: ", x["title"]," dia tendencia: ",x["trending_date"]," canal:  ",x["channel_title"]," fecha_publicación:  ",x["publish_time"]," vistas: ",x["views"]," likes:  ",x["likes"]," dislikes: ",x["dislikes"]," pais: "x["country"] )
         print("el algoritmo se demora: ",lista[1]," ms") 
     elif inputs==4:
         pais=input("Ingrese el nombre del pais  ")
         print("cargando...")
         
-        video_dias=controller.trendVideosCountry(catalog,pais)
+        video_dias=controller.requerimiento2(catalog,pais)
         video=video_dias[0]
         print(video["title"] ," ", video["channel_title"]," ", video["country"]," ",video_dias[1])
         print("El algoritmo se demora :" , video_dias[2] ," ms")

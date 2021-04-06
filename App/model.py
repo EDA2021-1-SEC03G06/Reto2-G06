@@ -68,7 +68,7 @@ def addCategory(catalog,category):
     lt.addLast(catalog["category"],category)
     
 def addCategory_videos(catalog,video):
-    categories=catalog["category-videos"]
+    categories=catalog["category-videos"]    
     category=int(video["category_id"])
 
     flag=mp.contains(categories,category)
@@ -151,7 +151,7 @@ def selectionSort(lista,numero):
         se.sort(lista,cmpVideosByLikes)
         stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return lista,elapsed_time_mseg
+    return lista
 
 def insertionSort(lista,numero):
     numero=int(numero)
@@ -169,7 +169,7 @@ def insertionSort(lista,numero):
         si.sort(lista,cmpVideosByLikes)
         stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return lista,elapsed_time_mseg
+    return lista
 
 def shellSort(lista,numero):
     numero=int(numero)
@@ -187,7 +187,7 @@ def shellSort(lista,numero):
         sa.sort(lista,cmpVideosByLikes)
         stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return lista,elapsed_time_mseg
+    return lista
 
 def mergeSort(lista,numero):
     numero=int(numero)
@@ -210,7 +210,7 @@ def mergeSort(lista,numero):
         
         
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return lista,elapsed_time_mseg
+    return lista
 
 
 def quickSort(lista,numero):
@@ -229,7 +229,7 @@ def quickSort(lista,numero):
         qs.sort(lista,cmpVideosByLikes)
         stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return lista,elapsed_time_mseg
+    return lista
 
 def videosLikesCategory(catalog,category):
     
@@ -244,7 +244,34 @@ def videosLikesCategory(catalog,category):
     
     return ordenada
 
-def trendVideosCountry(catalog,country):
+def requerimiento1(catalog,country,category):
+    start_time = time.process_time()
+
+    countries=catalog["countries"]
+    couple=mp.get(countries,country)
+    lista=me.getValue(couple)
+    size=lt.size(lista)
+
+    number=getCategoryNumber(category,catalog)
+    contador=1
+    
+    for i in range(1,size+1):
+        video=lt.getElement(lista,i)
+        if cmpVideosByCategory(number,video):
+            lt.exchange(lista,i,contador)
+            contador+=1
+    lista_total=lt.subList(lista,1,contador)
+    size=lt.size(lista_total)
+    print(size)
+    ordenada=mergeSort(lista_total,1)    
+
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+
+    return ordenada,elapsed_time_mseg
+
+def requerimiento2(catalog,country):
+    
     start_time = time.process_time()
     countries=catalog["countries"]
     couple=mp.get(countries,country)
@@ -274,4 +301,4 @@ def trendVideosCountry(catalog,country):
             numeral+=1
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return mayor,cantidad_mayor,elapsed_time_mseg
+    return mayor,elapsed_time_mseg

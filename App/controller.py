@@ -109,6 +109,8 @@ def loadCategories(catalog):
 def videosLikesCategory(catalog, category):
     return model.videosLikesCategory(catalog,category)
 
-def trendVideosCountry(catalog,country):
-    return model.trendVideosCountry(catalog,country)
+def requerimiento1(catalog,country,category):
+    return model.requerimiento1(catalog,country,category)
+def requerimiento2(catalog,country):
+    return model.requerimiento2(catalog,country)
 
