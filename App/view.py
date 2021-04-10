@@ -91,18 +91,20 @@ while True:
         lista=controller.videosLikesCategory(catalog,tag)
         for i in range(1,numero):
             video=lt.getElement(lista,i)
-            print(video["title"]," ",video["category_id"]," ",video["likes"])
+            print("titulo: ",video["title"]," id: ",video["category_id"]," likes: ",video["likes"])
     elif inputs==3:
         tamano=int(input("Ingrese la cantidad de videos en el ranking "))
         pais=input("Ingrese el nombre del pais ")
+        
         categoria=input("Ingrese la categoria que desea buscar ")
+        
         print("cargando...")
 
         lista=controller.requerimiento1(catalog,pais,categoria)
         
         for i in range(1,tamano+1):
             x=lt.getElement(lista[0],i)
-            print(i ," : ","Titulo: ", x["title"]," dia tendencia: ",x["trending_date"]," canal:  ",x["channel_title"]," fecha_publicación:  ",x["publish_time"]," vistas: ",x["views"]," likes:  ",x["likes"]," dislikes: ",x["dislikes"]," pais: "x["country"] )
+            print(i ," : ","Titulo: ", x["title"]," dia tendencia: ",x["trending_date"]," canal:  ",x["channel_title"]," fecha_publicación:  ",x["publish_time"]," vistas: ",x["views"]," likes:  ",x["likes"]," dislikes: ",x["dislikes"]," pais: ", x["country"] )
         print("el algoritmo se demora: ",lista[1]," ms") 
     elif inputs==4:
         pais=input("Ingrese el nombre del pais  ")
@@ -110,7 +112,7 @@ while True:
         
         video_dias=controller.requerimiento2(catalog,pais)
         video=video_dias[0]
-        print(video["title"] ," ", video["channel_title"]," ", video["country"]," ",video_dias[1])
+        print("Titulo: ", video["title"] ," Canal: ", video["channel_title"]," Pais: ", video["country"]," dias: ",video_dias[1])
         print("El algoritmo se demora :" , video_dias[2] ," ms")
     elif inputs==5:
         nombre=input("Ingrese la categoria del video  ")
@@ -118,7 +120,7 @@ while True:
         
         video_cates=controller.CategoriaTendencia(nombre,catalog)
         video=video_cates[0] 
-        print(video["title"]," ",video["channel_title"], " ",  video["category_id"]," ",video_cates[1])
+        print("Titulo ",video["title"]," Canal: ",video["channel_title"], " Categoria: ",  video["category_id"]," ",video_cates[1])
         print("el algoritmo se demora :", video_cates[2],"ms")
     elif inputs==6:
         pais=input("Ingrese el nombre del pais ")
@@ -132,7 +134,7 @@ while True:
             numero=size
         for i in range(1,numero+1):
             video=lt.getElement(videos[0],i)
-            print(i, " ",video["title"]," ",video["channel_title"]," ",video["publish_time"]," ",video["likes"]," ",video["country"])
+            print(i, " Titulo: ",video["title"]," Canal: ",video["channel_title"]," Fecha Publicación: ",video["publish_time"]," Likes: ",video["likes"]," Pais: ",video["country"])
         print("Tiempo de ejecución: ", videos[1])
 
 

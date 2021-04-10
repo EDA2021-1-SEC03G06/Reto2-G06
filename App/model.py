@@ -34,6 +34,7 @@ from DISClib.Algorithms.Sorting import selectionsort as se
 from DISClib.Algorithms.Sorting import insertionsort as si
 from DISClib.Algorithms.Sorting import quicksort as qs
 from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.DataStructures import listiterator as li
 import time
 assert cf
 
@@ -82,7 +83,7 @@ def addCategory_videos(catalog,video):
     lt.addLast(lista,video)
 def addCountry(catalog,video):
     countries=catalog["countries"]
-    country=video["country"]
+    country=video["country"].lower()
 
     flag=mp.contains(countries,country)
     if flag:
@@ -95,6 +96,7 @@ def addCountry(catalog,video):
 # Funciones para creacion de datos
 
 def newCategory(id,name):
+    name=name.lower()
     diccionario={ "id": id,"name":name}
     return diccionario
 
@@ -107,7 +109,7 @@ def getCategoryNumber(nombre,catalog):
     
     for i in range(1,size+1):
         elemento=lt.getElement(categorias,i)
-        if elemento["name"]==nombre:
+        if elemento["name"].lower()==nombre.lower():
             print(elemento["id"])
             return int(elemento["id"])
 
@@ -119,7 +121,7 @@ def cmpVideosByvViewsAscendant(video1,video2):
     return int(video1["views"])>int(video2["views"])
 
 def cmpVideosByCountry(pais,video):
-    return str(video["country"])==str(pais)
+    return str(video["country"].lower())==str(pais.lower())
 def cmpVideosByCategory(numero,video):
     return int(video["category_id"])==int(numero)
 def cmpVideosById(video1,video2):
@@ -246,6 +248,7 @@ def videosLikesCategory(catalog,category):
 
 def requerimiento1(catalog,country,category):
     start_time = time.process_time()
+    country=country.lower()
 
     countries=catalog["countries"]
     couple=mp.get(countries,country)
@@ -254,12 +257,16 @@ def requerimiento1(catalog,country,category):
 
     number=getCategoryNumber(category,catalog)
     contador=1
+    iterador=li.newIterator(lista)
+    i=1
     
-    for i in range(1,size+1):
-        video=lt.getElement(lista,i)
+    while li.hasNext(iterador):
+        video=li.next(iterador)
         if cmpVideosByCategory(number,video):
             lt.exchange(lista,i,contador)
             contador+=1
+        i+=1
+        
     lista_total=lt.subList(lista,1,contador)
     size=lt.size(lista_total)
     print(size)
@@ -277,7 +284,7 @@ def requerimiento2(catalog,country):
     couple=mp.get(countries,country)
     lista=me.getValue(couple)
 
-    lista_ordenada=mergeSort(lista,3)[0]
+    lista_ordenada=mergeSort(lista,3)
 
     mayor=lt.getElement(lista_ordenada,1)
     cantidad_mayor=0
@@ -301,4 +308,4 @@ def requerimiento2(catalog,country):
             numeral+=1
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return mayor,elapsed_time_mseg
+    return mayor,cantidad_mayor,elapsed_time_mseg
