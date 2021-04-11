@@ -278,7 +278,7 @@ def requerimiento1(catalog,country,category):
     return ordenada,elapsed_time_mseg
 
 def requerimiento2(catalog,country):
-    
+    country=country.lower()
     start_time = time.process_time()
     countries=catalog["countries"]
     couple=mp.get(countries,country)
@@ -290,22 +290,25 @@ def requerimiento2(catalog,country):
     cantidad_mayor=0
     size=lt.size(lista_ordenada)
     print(size)
-    
-    for i in range(1,size+1):                    #se compara cual es el video que mas dias ha durado en tendencia
-        comparador=lt.getElement(lista_ordenada,i)
-        bandera=True
-        numeral=i
-        cantidad=0
-        while bandera and numeral<=size:
-            comparado=lt.getElement(lista_ordenada,numeral)
-            if comparador["video_id"]==comparado["video_id"]:
-                cantidad+=1
-            else:
-                bandera=False
+    iterador=li.newIterator(lista_ordenada)
+
+    cantidad=0
+    comparador=mayor
+    i=1
+    while i<=size:
+        video=lt.getElement(lista_ordenada,i)
+        #video=li.next(iterador)
+        if video["video_id"]==comparador["video_id"]:
+            cantidad+=1
+        else:
             if cantidad>cantidad_mayor:
+                mayor=comparador
                 cantidad_mayor=cantidad
-                mayor=lt.getElement(lista_ordenada,numeral)
-            numeral+=1
+            cantidad=1
+            comparador=video
+        i+=1
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return mayor,cantidad_mayor,elapsed_time_mseg
+
+    
