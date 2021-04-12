@@ -296,10 +296,9 @@ def requerimiento2(catalog,country):
 
     cantidad=0
     comparador=mayor
-    i=1
-    while i<=size:
-        video=lt.getElement(lista_ordenada,i)
-        #video=li.next(iterador)
+    
+    while li.hasNext(iterador):
+        video=li.next(iterador)
         if video["video_id"]==comparador["video_id"]:
             cantidad+=1
         else:
@@ -308,7 +307,7 @@ def requerimiento2(catalog,country):
                 cantidad_mayor=cantidad
             cantidad=1
             comparador=video
-        i+=1
+        
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return mayor,cantidad_mayor,elapsed_time_mseg
