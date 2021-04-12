@@ -113,4 +113,6 @@ def requerimiento1(catalog,country,category):
     return model.requerimiento1(catalog,country,category)
 def requerimiento2(catalog,country):
     return model.requerimiento2(catalog,country)
+def requerimiento4(country,tag,catalog):
+    return model.requerimiento4(country,tag,catalog)
 

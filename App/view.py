@@ -43,7 +43,7 @@ def printMenu():
     print("4- requerimiento2")
     print("5- requerimiento3")
     print("6- requerimiento4 ")
-    print("7- Seleccionar tamaño de la muestra para trabajar")
+
 
 catalog = None
 reducido= None
@@ -128,7 +128,7 @@ while True:
         numero=int(input("Ingrese la cantidad de videos "))
         tag=input("Ingrese el tag ")
         print("cargando")
-        videos=controller.PaisTagLikes(pais,tag,catalog)
+        videos=controller.requerimiento4(pais,tag,catalog)
         size=lt.size(videos[0])
         if numero>size:
             numero=size
@@ -137,8 +137,3 @@ while True:
             print(i, " Titulo: ",video["title"]," Canal: ",video["channel_title"]," Fecha Publicación: ",video["publish_time"]," Likes: ",video["likes"]," Pais: ",video["country"])
         print("Tiempo de ejecución: ", videos[1])
 
-
-    elif inputs==7:
-        size=int(input("Indique el tamaño de la muestra"))
-        if size<lt.size(catalog["videos"]):
-            reducido=controller.reduceList(catalog,size)  

@@ -106,12 +106,14 @@ def newCategory(id,name):
 def getCategoryNumber(nombre,catalog):
     categorias=catalog["category"]
     size=lt.size(categorias)
-    
-    for i in range(1,size+1):
-        elemento=lt.getElement(categorias,i)
+    iterador=li.newIterator(categorias)
+    bandera=True
+    while li.hasNext(iterador) and bandera:
+        elemento=li.next(iterador)
         if elemento["name"].lower()==nombre.lower():
             print(elemento["id"])
-            return int(elemento["id"])
+            bandera=False
+    return bandera
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def cmpVideosByViewsDescendant(video1,video2):
@@ -128,7 +130,7 @@ def cmpVideosById(video1,video2):
     return video1["video_id"]<video2["video_id"]
 
 def cmpVideosByTag(tag,video):
-    return tag in video["tags"]   
+    return tag.lower() in video["tags"].lower()   
 def cmpByCategory(category1,category2):
     return int(category1)>int(category2)
 def cmpVideosByLikes(video1,video2):
@@ -311,4 +313,41 @@ def requerimiento2(catalog,country):
     elapsed_time_mseg = (stop_time - start_time)*1000
     return mayor,cantidad_mayor,elapsed_time_mseg
 
+def requerimiento4(country,tag,catalog):
+    start_time = time.process_time()
+    country=country.lower()
+    countries=catalog["countries"]
+    couple=mp.get(countries,country)
+    lista=me.getValue(couple)
+
+    nueva_lista=lt.newList("ARRAY_LIST")
+    iterador=li.newIterator(lista)
+    size=lt.size(lista)
+    print(size)
+    while li.hasNext(iterador):
+        video=li.next(iterador)
+        if cmpVideosByTag(tag,video):
+            lt.addLast(nueva_lista,video)
+    print(lt.size(nueva_lista))
+    nueva_lista=mergeSort(nueva_lista,4)
+    nueva_lista=mergeSort(nueva_lista,3)
+    
+
+    lista_ordenada=lt.newList("ARRAY_LIST")
+    video=lt.getElement(nueva_lista,1)
+    lt.addLast(lista_ordenada,video)
+
+    segundo_iterador=li.newIterator(nueva_lista)
+    while li.hasNext(segundo_iterador):
+        video=li.next(segundo_iterador)
+        comparador=lt.lastElement(lista_ordenada)
+        if comparador["title"]!=video["title"]:
+            lt.addLast(lista_ordenada,video)
+    
+    lista_ordenada=mergeSort(lista_ordenada,4)
+
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+
+    return lista_ordenada,elapsed_time_mseg
     
