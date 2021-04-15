@@ -102,7 +102,7 @@ while True:
         
         for i in range(1,tamano+1):
             x=lt.getElement(lista[0],i)
-            print(i ," : ","Titulo: ", x["title"]," dia tendencia: ",x["trending_date"]," canal:  ",x["channel_title"]," fecha_publicación:  ",x["publish_time"]," vistas: ",x["views"]," likes:  ",x["likes"]," dislikes: ",x["dislikes"]," pais: "x["country"] )
+            print(i ," : ","Titulo: ", x["title"]," dia tendencia: ",x["trending_date"]," canal:  ",x["channel_title"]," fecha_publicación:  ",x["publish_time"]," vistas: ",x["views"]," likes:  ",x["likes"]," dislikes: ",x["dislikes"]," pais: ",x["country"] )
         print("el algoritmo se demora: ",lista[1]," ms") 
     elif inputs==4:
         pais=input("Ingrese el nombre del pais  ")
@@ -113,10 +113,11 @@ while True:
         print(video["title"] ," ", video["channel_title"]," ", video["country"]," ",video_dias[1])
         print("El algoritmo se demora :" , video_dias[2] ," ms")
     elif inputs==5:
-        nombre=input("Ingrese la categoria del video  ")
+
+        nombres=input("Ingrese la categoria del video  ")
         print ("Cargando...")   
         
-        video_cates=controller.CategoriaTendencia(nombre,catalog)
+        video_cates=controller.requerimientos3(catalog,nombres)
         video=video_cates[0] 
         print(video["title"]," ",video["channel_title"], " ",  video["category_id"]," ",video_cates[1])
         print("el algoritmo se demora :", video_cates[2],"ms")

@@ -34,6 +34,7 @@ from DISClib.Algorithms.Sorting import selectionsort as se
 from DISClib.Algorithms.Sorting import insertionsort as si
 from DISClib.Algorithms.Sorting import quicksort as qs
 from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.DataStructures import listiterator as li
 import time
 assert cf
 
@@ -51,7 +52,7 @@ def newCatalog(tipo):
 
     catalog["videos"] = lt.newList(tipo)
     
-    catalog["category"]=lt.newList(tipo)
+    catalog["category"]=mp.newMap(200,maptype='CHAINING',loadfactor=1.0)
     catalog["category-videos"]=mp.newMap(200,maptype='CHAINING',loadfactor=1.0)
     catalog["countries"]=mp.newMap(200,maptype='CHAINING',loadfactor=1.0)
 
@@ -302,3 +303,39 @@ def requerimiento2(catalog,country):
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return mayor,elapsed_time_mseg
+
+
+def requerimiento3(catalog,nombres):
+        
+    start_time = time.process_time()
+    nombre = nombres
+    number= getCategoryNumber(nombre,catalog)
+    categoria=catalog["category"]
+    couple =mp.get(categoria,nombre)
+    lista= me.getvalue(couple)
+    
+    lista_ordenada=mergeSort(lista,3)
+
+    mayor=lt.getElement(lista_ordenada,1)
+    cantidad_mayor=0
+    size=lt.size(lista_ordenada)
+    print(size)
+    iterador=li.newIterator(lista_ordenada)
+
+    cantidad=0
+    comparador=mayor
+    
+    while li.hasNext(iterador):
+        video=li.next(iterador)
+        if video["title"]==comparador["title"]:
+            cantidad+=1
+        else:
+            if cantidad>cantidad_mayor:
+                mayor=comparador
+                cantidad_mayor=cantidad
+            cantidad=1
+            comparador=video
+        
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return mayor,cantidad_mayor,elapsed_time_mseg
