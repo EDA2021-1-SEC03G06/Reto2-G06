@@ -84,7 +84,7 @@ def deltaMemory(start_memory, stop_memory):
 
 def loadVideos(catalog):
     
-    file_name=cf.data_dir + "videos-large.csv"
+    file_name=cf.data_dir + "videos-small.csv"
     input_file=csv.DictReader(open(file_name,encoding="utf-8"))
     i=0
     for video in input_file:
@@ -113,6 +113,8 @@ def requerimiento1(catalog,country,category):
     return model.requerimiento1(catalog,country,category)
 def requerimiento2(catalog,country):
     return model.requerimiento2(catalog,country)
+def requerimientos3(catalog,nombres):
+    return model.requerimiento3(catalog,nombres)    
 def requerimiento4(country,tag,catalog):
     return model.requerimiento4(country,tag,catalog)
 

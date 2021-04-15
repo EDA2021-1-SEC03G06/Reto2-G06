@@ -115,12 +115,12 @@ while True:
         print("Titulo: ", video["title"] ," Canal: ", video["channel_title"]," Pais: ", video["country"]," dias: ",video_dias[1])
         print("El algoritmo se demora :" , video_dias[2] ," ms")
     elif inputs==5:
-        nombre=input("Ingrese la categoria del video  ")
+        nombres=input("Ingrese la categoria del video  ")
         print ("Cargando...")   
-        
-        video_cates=controller.CategoriaTendencia(nombre,catalog)
+       
+        video_cates=controller.requerimientos3(catalog,nombres)
         video=video_cates[0] 
-        print("Titulo ",video["title"]," Canal: ",video["channel_title"], " Categoria: ",  video["category_id"]," ",video_cates[1])
+        print(video["title"]," ",video["channel_title"], " ",  video["category_id"]," ",video_cates[1])
         print("el algoritmo se demora :", video_cates[2],"ms")
     elif inputs==6:
         pais=input("Ingrese el nombre del pais ")
