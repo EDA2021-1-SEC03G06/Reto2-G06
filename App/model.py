@@ -108,12 +108,14 @@ def getCategoryNumber(nombre,catalog):
     size=lt.size(categorias)
     iterador=li.newIterator(categorias)
     bandera=True
+    numero=0
     while li.hasNext(iterador) and bandera:
         elemento=li.next(iterador)
         if elemento["name"].lower()==nombre.lower():
             print(elemento["id"])
             bandera=False
-    return bandera
+            numero=elemento["id"]
+    return numero
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def cmpVideosByViewsDescendant(video1,video2):
@@ -271,7 +273,6 @@ def requerimiento1(catalog,country,category):
         
     lista_total=lt.subList(lista,1,contador)
     size=lt.size(lista_total)
-    print(size)
     ordenada=mergeSort(lista_total,1)    
 
     stop_time = time.process_time()

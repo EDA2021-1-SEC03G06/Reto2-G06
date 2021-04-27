@@ -104,7 +104,7 @@ while True:
         
         for i in range(1,tamano+1):
             x=lt.getElement(lista[0],i)
-            print(i ," : ","Titulo: ", x["title"]," dia tendencia: ",x["trending_date"]," canal:  ",x["channel_title"]," fecha_publicación:  ",x["publish_time"]," vistas: ",x["views"]," likes:  ",x["likes"]," dislikes: ",x["dislikes"]," pais: ", x["country"] )
+            print(i ," : ","Titulo: ", x["title"]," dia tendencia: ",x["trending_date"]," canal:  ",x["channel_title"]," fecha_publicación:  ",x["publish_time"]," vistas: ",x["views"]," likes:  ",x["likes"]," dislikes: ",x["dislikes"]," pais: ", x["country"]," categoria: ", x["category_id"] )
         print("el algoritmo se demora: ",lista[1]," ms") 
     elif inputs==4:
         pais=input("Ingrese el nombre del pais  ")
